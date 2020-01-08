@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>dbvc-parent</artifactId>
+        <groupId>com.hb0730</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>dbvc-spring-boot-parent</artifactId>
+    <name>dbvc-spring-boot-parent</name>
+    <description>database version controller</description>
+    <url>https://github.com/hb0730/dbvc</url>
+
+    <licenses>
+        <license>
+            <name>GPL-2.0 License</name>
+            <url>https://choosealicense.com/licenses/gpl-2.0/</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>hb730</name>
+            <email>1278032416@qq.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git@github.com:hb0730/dbvc.git</connection>
+        <developerConnection>scm:git@github.com:hb0730/dbvc.git</developerConnection>
+        <url>https://github.com/hb0730/dbvc.git</url>
+    </scm>
+    <properties>
+        <spring.boot.version>2.0.5.RELEASE</spring.boot.version>
+        <spring.version>5.1.0.RELEASE</spring.version>
+        <mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure-processor</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-validation</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.spring.boot.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

@@ -6,11 +6,17 @@
     <groupId>com.hb0730</groupId>
     <artifactId>dbvc-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <modules>
+        <module>dbvc</module>
+        <module>dbvc-spring-boot</module>
+        <module>dbvc-spring-boot-samples</module>
+        <module>dbvc-spring-boot-parent</module>
+    </modules>
     <packaging>pom</packaging>
 
-    <name>dbvc</name>
+    <name>dbvc-parent</name>
     <description>database version controller</description>
-    <url>https://github.com/hb0730/hotool</url>
+    <url>https://github.com/hb0730/dbvc</url>
 
     <properties>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
@@ -18,6 +24,7 @@
 
         <!-- versions -->
         <compile.version>8</compile.version>
+        <slf4j.version>1.7.25</slf4j.version>
     </properties>
     
     <licenses>
@@ -37,6 +44,15 @@
         <developerConnection>scm:git@github.com:hb0730/dbvc.git</developerConnection>
         <url>https://github.com/hb0730/dbvc.git</url>
     </scm>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <plugins>
             <plugin>
