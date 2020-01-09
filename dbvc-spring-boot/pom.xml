@@ -11,28 +11,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dbvc-spring-boot</artifactId>
+    <packaging>jar</packaging>
 
     <name>dbvc-spring-boot</name>
     <description>database version controller</description>
     <url>https://github.com/hb0730/dbvc</url>
 
-    <licenses>
-        <license>
-            <name>GPL-2.0 License</name>
-            <url>https://choosealicense.com/licenses/gpl-2.0/</url>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <name>hb730</name>
-            <email>1278032416@qq.com</email>
-        </developer>
-    </developers>
-    <scm>
-        <connection>scm:git@github.com:hb0730/dbvc.git</connection>
-        <developerConnection>scm:git@github.com:hb0730/dbvc.git</developerConnection>
-        <url>https://github.com/hb0730/dbvc.git</url>
-    </scm>
 
     <dependencies>
         <dependency>

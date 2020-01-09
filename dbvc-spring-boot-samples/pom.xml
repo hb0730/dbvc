@@ -3,68 +3,28 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>dbvc-parent</artifactId>
-        <groupId>com.hb0730</groupId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.8.RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.hb0730</groupId>
     <artifactId>dbvc-spring-boot-samples</artifactId>
+    <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
 
     <name>dbvc-spring-boot-samples</name>
     <description>database version controller</description>
     <url>https://github.com/hb0730/dbvc</url>
 
-    <licenses>
-        <license>
-            <name>GPL-2.0 License</name>
-            <url>https://choosealicense.com/licenses/gpl-2.0/</url>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <name>hb730</name>
-            <email>1278032416@qq.com</email>
-        </developer>
-    </developers>
-    <scm>
-        <connection>scm:git@github.com:hb0730/dbvc.git</connection>
-        <developerConnection>scm:git@github.com:hb0730/dbvc.git</developerConnection>
-        <url>https://github.com/hb0730/dbvc.git</url>
-    </scm>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <!-- Import dependency management from Spring Boot -->
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.1.8.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>com.hb0730</groupId>
             <artifactId>dbvc-spring-boot</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-        <!-- starter -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <!-- 测试 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <!-- web模块依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -97,4 +57,25 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.hb0730.dbvc.Application</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>
+                                repackage
+                            </goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

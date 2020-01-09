@@ -13,6 +13,10 @@
     <artifactId>dbvc-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
 
+    <name>dbvc-spring-boot</name>
+    <description>database version controller</description>
+    <url>https://github.com/hb0730/dbvc</url>
+
     <dependencies>
         <dependency>
             <groupId>com.hb0730</groupId>

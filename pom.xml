@@ -6,46 +6,49 @@
     <groupId>com.hb0730</groupId>
     <artifactId>dbvc-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <modules>
-        <module>dbvc</module>
-        <module>dbvc-spring-boot</module>
-        <module>dbvc-spring-boot-samples</module>
-        <module>dbvc-spring-boot-parent</module>
-        <module>dbvc-spring-boot-starter</module>
-    </modules>
     <packaging>pom</packaging>
 
     <name>dbvc-parent</name>
     <description>database version controller</description>
     <url>https://github.com/hb0730/dbvc</url>
 
-    <properties>
-        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+    <scm>
+        <connection>scm:git@github.com:hb0730/dbvc.git</connection>
+        <developerConnection>scm:git@github.com:hb0730/dbvc.git</developerConnection>
+        <url>https://github.com/hb0730/dbvc.git</url>
+    </scm>
 
-        <!-- versions -->
-        <compile.version>8</compile.version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <dbvc.version>1.0.0-SNAPSHOT</dbvc.version>
-    </properties>
-    
     <licenses>
         <license>
             <name>GPL-2.0 License</name>
             <url>https://choosealicense.com/licenses/gpl-2.0/</url>
         </license>
     </licenses>
+
+    <modules>
+        <module>dbvc</module>
+        <module>dbvc-spring-boot</module>
+        <module>dbvc-spring-boot-parent</module>
+        <module>dbvc-spring-boot-starter</module>
+    </modules>
+
+
+
+    <properties>
+        <!-- versions -->
+        <compile.version>8</compile.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <dbvc.version>1.0.0-SNAPSHOT</dbvc.version>
+    </properties>
+
+
     <developers>
         <developer>
             <name>hb730</name>
             <email>1278032416@qq.com</email>
         </developer>
     </developers>
-    <scm>
-        <connection>scm:git@github.com:hb0730/dbvc.git</connection>
-        <developerConnection>scm:git@github.com:hb0730/dbvc.git</developerConnection>
-        <url>https://github.com/hb0730/dbvc.git</url>
-    </scm>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -98,6 +101,15 @@
             <build>
                 <plugins>
                     <!-- Source -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.8.1</version>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
