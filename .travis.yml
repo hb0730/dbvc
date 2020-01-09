@@ -1,6 +1,7 @@
 language: java
 jdk:
   - openjdk8
+os: linux
 cache:
   directories:
     - '$HOME/.m2/repository'
@@ -13,8 +14,8 @@ jobs:
       script: mvn clean test  -DskipTests=true -Dmaven.javadoc.skip=true
     - stage: build
       name: "maven build"
-      script: mvn clean build  -DskipTests=true -Dmaven.javadoc.skip=true
-    - state: GitHub Release
+      script: mvn clean install  -DskipTests=true -Dmaven.javadoc.skip=true
+    - stage: GitHub Release
       script: echo "Deploying to GitHub releases ..." && pwd
       deploy:
         provider: releases
@@ -29,7 +30,7 @@ stages:
   - test
   - build
   - name: GitHub Release
-    if: tag= ~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+    if: tag =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
 branches:
   only:
