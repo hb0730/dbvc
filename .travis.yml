@@ -21,7 +21,10 @@ jobs:
         provider: releases
         api_key: $GITHUB_OAUTH_TOKEN
         file_glob: true
-        file: $TRAVIS_BUILD_DIR/build/libs/*
+        file:
+        - $TRAVIS_BUILD_DIR/dbvc-spring-boot/target/*.jar
+        - $TRAVIS_BUILD_DIR/dbvc-spring-boot-parent/target/*.jar
+        - $TRAVIS_BUILD_DIR/dbvc-spring-boot-starter/target/*.jar
         skip_cleanup: true
         on:
           tags: true
