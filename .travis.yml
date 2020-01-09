@@ -15,17 +15,6 @@ jobs:
     - stage: build
       name: "maven build"
       script: mvn clean install  -DskipTests=true -Dmaven.javadoc.skip=true
-    - stage: GitHub Release Beta
-      name: "beta"
-      script: echo "Deploying to GitHub releases beta ..." && pwd
-      deploy:
-        provider: releases
-        api_key: $GITHUB_OAUTH_TOKEN
-        file_glob: true
-        file: $TRAVIS_BUILD_DIR/build/libs/*
-        skip_cleanup: true
-        on:
-          tags: true
     - stage: GitHub Release
       script: echo "Deploying to GitHub releases ..." && pwd
       deploy:
@@ -42,8 +31,6 @@ stages:
   - build
   - name: GitHub Release
     if: tag =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
-  - name: GitHub Release Beta
-    if: tag =~ /^v\d+\.\d+(\.\d+)?-(beta|alpha)+(\.\d+)?$/
 
 branches:
   only:
