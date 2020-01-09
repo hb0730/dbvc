@@ -6,13 +6,17 @@
         <artifactId>dbvc-parent</artifactId>
         <groupId>com.hb0730</groupId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dbvc-spring-boot-parent</artifactId>
+
     <name>dbvc-spring-boot-parent</name>
     <description>database version controller</description>
     <url>https://github.com/hb0730/dbvc</url>
+
+    <packaging>pom</packaging>
 
     <licenses>
         <license>
@@ -82,16 +86,6 @@
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.spring.boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.8.1</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.6</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

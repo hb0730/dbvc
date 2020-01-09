@@ -1,6 +1,5 @@
 package com.hb0730.dbvc.spring.core;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.FileCopyUtils;
@@ -41,7 +40,7 @@ public class SqlFileUtils {
                 if (filename != null) {
                     File file = new File(filename);
                     byte[] bytes = FileCopyUtils.copyToByteArray(inputStream);
-                    FileCopyUtils.copy(bytes,file);
+                    FileCopyUtils.copy(bytes, file);
                     files.add(file);
                 }
             }
