@@ -1,4 +1,4 @@
-package com.hb0730.dbvc.exption;
+package com.hb0730.dbvc.spring.core;
 
 /**
  * <p>

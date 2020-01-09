@@ -1,17 +1,18 @@
-package com.hb0730.dbvc.spring;
+package com.hb0730.dbvc.spring.core;
 
-import com.hb0730.dbvc.exption.DbvcException;
+import com.hb0730.dbvc.spring.autoconfigure.DbvcProperties;
 import org.apache.ibatis.jdbc.ScriptRunner;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -19,16 +20,25 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
+ * 执行sqlFile
  * </P>
  *
  * @author bing_huang
  * @since V1.0
  */
-@Component
 public class RunSqlFile {
     private Logger logger = LoggerFactory.getLogger(RunSqlFile.class);
     @Resource
     public SqlSessionFactory factory;
+
+    private DbvcProperties properties;
+
+    public RunSqlFile(DbvcProperties properties) {
+        this.properties = properties;
+    }
+
+    public RunSqlFile() {
+    }
 
     /**
      * <p>
@@ -48,10 +58,12 @@ public class RunSqlFile {
      * </p>
      *
      * @return 脚本文件
-     * @throws IOException
      */
-    private List<File> readFile() throws IOException {
-        List<File> file = SqlFileUtils.getFile();
+    private List<File> readFile() {
+        List<File> file = SqlFileUtils.getFile(properties.getUrl());
+        if (CollectionUtils.isEmpty(file)) {
+            return null;
+        }
         Map<String, File> collect = file.stream().collect(Collectors.toMap(File::getName, account -> account));
         Set<String> strings = collect.keySet();
         createTabled();
@@ -67,38 +79,59 @@ public class RunSqlFile {
      * 运行
      * </p>
      *
-     * @param files
-     * @throws FileNotFoundException
+     * @param file sql文件集
      */
-    private void run(List<File> files) throws SQLException {
+    private void run(File file) {
+        if (Objects.isNull(file)) {
+            return;
+        }
         try {
             ScriptRunner runner = new ScriptRunner(getConnection());
-            //自动提交
-            runner.setAutoCommit(true);
-            runner.setFullLineDelimiter(false);
-            //分隔符
-            runner.setDelimiter(";");
-            runner.setSendFullScript(false);
-            runner.setStopOnError(true);
-            //runner.setLogWriter(null);
-            for (File file : files) {
-                runner.runScript(new InputStreamReader(new FileInputStream(file)));
+            runner.setAutoCommit(properties.isAutoCommit());
+            runner.setFullLineDelimiter(properties.isFullLineDelimiter());
+            runner.setDelimiter(properties.getDelimiter());
+            runner.setSendFullScript(properties.isSendFullScript());
+            runner.setStopOnError(properties.isStopOnError());
+            if (!logger.isDebugEnabled()) {
+                runner.setLogWriter(null);
             }
+            runner.runScript(new InputStreamReader(new FileInputStream(file)));
             runner.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("run mybatis ScriptRunner error,Message:{}", e.getMessage());
-            logger.error("run mybatis ScriptRunner error");
+            throw new DbvcException("run mybatis ScriptRunner error");
         }
 
 
     }
 
-    public void star() throws IOException, SQLException {
+    /**
+     * <p>
+     * 启动
+     * </p>
+     */
+    public void star() throws SQLException {
         List<File> files = readFile();
         if (!CollectionUtils.isEmpty(files)) {
             createTabled();
-            run(files);
+            for (File file : files) {
+                long start = System.currentTimeMillis();
+                int success = 1;
+                String fileName = "";
+                try {
+                    fileName = file.getName();
+                    run(file);
+                } catch (Exception e) {
+                    success = 0;
+                    throw new DbvcException(e.getMessage());
+                } finally {
+                    long end = System.currentTimeMillis();
+                    java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
+                    insert(fileName, date, success, end - start);
+                }
+
+            }
         }
     }
 
@@ -132,25 +165,23 @@ public class RunSqlFile {
      * @param date          创建时间
      * @param success       是否成功
      * @param executionTime 耗时
-     * @return 是否成功
      */
-    private int insert(String description, Date date, int success, int executionTime) {
+    private void insert(String description, java.sql.Date date, int success, long executionTime) throws SQLException {
         logger.debug("insert db version controller");
-        int insert = 0;
-        SqlSession sqlSession = factory.openSession();
-        String builder = "insert into schema_history" +
-                "(" +
-                "description,createTime,success,execution_time" +
-                ")" +
-                "VALUES(" +
-                description +
-                date +
-                success +
-                executionTime +
-                ")";
-        insert = sqlSession.insert(builder);
-        sqlSession.commit();
-        return insert;
+        Connection connection = getConnection();
+        String sql = "insert into schema_history(`description`,`createTime`,`success`,`execution_time`)Values(?,?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, description);
+            preparedStatement.setDate(2, date);
+            preparedStatement.setInt(3, success);
+            preparedStatement.setLong(4, executionTime);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("insert dbvc error, message:{}", e.getMessage());
+            throw new DbvcException("insert dbvc error");
+        }
     }
 
     /**
@@ -161,7 +192,7 @@ public class RunSqlFile {
      * @return filename
      */
     private List<String> getAll() {
-        String sql = "select description from schema_history";
+        String sql = "select description from schema_history WHERE success=1";
         try {
             ResultSet resultSet = getConnection().prepareStatement(sql).executeQuery();
             List<String> result = new ArrayList<>();

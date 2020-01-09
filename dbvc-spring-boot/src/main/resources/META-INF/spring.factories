@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration = \
+  com.hb0730.dbvc.spring.autoconfigure.DbvcAutoConfig

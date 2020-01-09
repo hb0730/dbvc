@@ -1,0 +1,1 @@
+--DROP TABLE IF EXISTS `j_sys_notice`;
