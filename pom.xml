@@ -38,7 +38,7 @@
         <!-- versions -->
         <compile.version>8</compile.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <dbvc.version>1.0.0-SNAPSHOT</dbvc.version>
+        <dbvc.version>${version}</dbvc.version>
     </properties>
 
 
