@@ -39,6 +39,7 @@
         <spring.boot.version>2.0.5.RELEASE</spring.boot.version>
         <spring.version>5.1.0.RELEASE</spring.version>
         <mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
+        <dbvc.spring.boot.version>1.0.0-SNAPSHOT</dbvc.spring.boot.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -86,6 +87,11 @@
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hb0730</groupId>
+                <artifactId>dbvc-spring-boot</artifactId>
+                <version>${dbvc.spring.boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

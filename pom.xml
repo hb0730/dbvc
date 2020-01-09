@@ -11,6 +11,7 @@
         <module>dbvc-spring-boot</module>
         <module>dbvc-spring-boot-samples</module>
         <module>dbvc-spring-boot-parent</module>
+        <module>dbvc-spring-boot-starter</module>
     </modules>
     <packaging>pom</packaging>
 
