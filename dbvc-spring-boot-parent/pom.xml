@@ -21,7 +21,7 @@
         <project.rootdir>${project.basedir}/..</project.rootdir>
         <spring.boot.version>2.0.5.RELEASE</spring.boot.version>
         <spring.version>5.1.0.RELEASE</spring.version>
-        <dbvc.spring.boot.version>1.0.0-SNAPSHOT</dbvc.spring.boot.version>
+        <dbvc.spring.boot.version>${parent.version}</dbvc.spring.boot.version>
         <mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
 
         <java.version>1.8</java.version>

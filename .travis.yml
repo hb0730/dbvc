@@ -9,6 +9,9 @@ before_install:
   - export TZ='Asia/Shanghai'
 jobs:
   include:
+    - stage: test
+      name: "Unit test"
+      script: mvn clean test  -DskipTests=true -Dmaven.javadoc.skip=true
     - stage: build
       name: "maven build"
       script: mvn clean install  -DskipTests=true -Dmaven.javadoc.skip=true
@@ -19,14 +22,15 @@ jobs:
         api_key: $GITHUB_OAUTH_TOKEN
         file_glob: true
         file:
-        - $TRAVIS_BUILD_DIR/dbvc-spring-boot/target/*.jar
-        - $TRAVIS_BUILD_DIR/dbvc-spring-boot-parent/target/*.jar
-        - $TRAVIS_BUILD_DIR/dbvc-spring-boot-starter/target/*.jar
+          - $TRAVIS_BUILD_DIR/dbvc-spring-boot/target/*.jar
+          - $TRAVIS_BUILD_DIR/dbvc-spring-boot-parent/target/*.jar
+          - $TRAVIS_BUILD_DIR/dbvc-spring-boot-starter/target/*.jar
         skip_cleanup: true
         on:
           tags: true
 
 stages:
+  - test
   - build
   - name: GitHub Release
     if: tag =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
