@@ -9,9 +9,6 @@ before_install:
   - export TZ='Asia/Shanghai'
 jobs:
   include:
-    - stage: test
-      name: "Unit test"
-      script: mvn clean test  -DskipTests=true -Dmaven.javadoc.skip=true
     - stage: build
       name: "maven build"
       script: mvn clean install  -DskipTests=true -Dmaven.javadoc.skip=true
@@ -30,7 +27,6 @@ jobs:
           tags: true
 
 stages:
-  - test
   - build
   - name: GitHub Release
     if: tag =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
