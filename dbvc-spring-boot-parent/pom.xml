@@ -93,6 +93,11 @@
                 <artifactId>dbvc-spring-boot</artifactId>
                 <version>${dbvc.spring.boot.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.hb0730</groupId>
+                <artifactId>dbvc</artifactId>
+                <version>${dbvc.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -1,4 +1,4 @@
-package com.hb0730.dbvc.spring.core;
+package com.hb0730.dbvc.exception;
 
 /**
  * <p>

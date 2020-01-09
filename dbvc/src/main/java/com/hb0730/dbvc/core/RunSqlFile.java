@@ -1,13 +1,12 @@
-package com.hb0730.dbvc.spring.core;
+package com.hb0730.dbvc.core;
 
-import com.hb0730.dbvc.spring.autoconfigure.DbvcProperties;
+import com.hb0730.dbvc.exception.DbvcException;
+import com.hb0730.dbvc.properties.DbvcProperties;
 import org.apache.ibatis.jdbc.ScriptRunner;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -28,13 +27,12 @@ import java.util.stream.Collectors;
  */
 public class RunSqlFile {
     private Logger logger = LoggerFactory.getLogger(RunSqlFile.class);
-    @Resource
-    public SqlSessionFactory factory;
-
     private DbvcProperties properties;
+    private Connection connection;
 
-    public RunSqlFile(DbvcProperties properties) {
+    public RunSqlFile(DbvcProperties properties, Connection connection) {
         this.properties = properties;
+        this.connection = connection;
     }
 
     public RunSqlFile() {
@@ -48,7 +46,7 @@ public class RunSqlFile {
      * @return 连接
      */
     private Connection getConnection() {
-        return factory.openSession().getConnection();
+        return connection;
     }
 
 
@@ -205,6 +203,5 @@ public class RunSqlFile {
             logger.error("select error,{}", e.getMessage());
             throw new DbvcException("select error");
         }
-
     }
 }

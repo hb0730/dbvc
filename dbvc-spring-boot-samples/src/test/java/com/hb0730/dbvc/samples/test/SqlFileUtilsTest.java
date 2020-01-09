@@ -1,6 +1,6 @@
 package com.hb0730.dbvc.samples.test;
 
-import com.hb0730.dbvc.spring.core.SqlFileUtils;
+import com.hb0730.dbvc.core.SqlFileUtils;
 import org.junit.Test;
 import org.springframework.util.ResourceUtils;
 

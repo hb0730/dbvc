@@ -1,6 +1,6 @@
 package com.hb0730.dbvc.samples.test;
 
-import com.hb0730.dbvc.spring.core.RunSqlFile;
+import com.hb0730.dbvc.core.RunSqlFile;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +16,7 @@ public class RunSqlFileTestTest {
 
     @Resource
     private RunSqlFile file;
+
     @Test
     public void test() throws IOException, SQLException {
         file.star();

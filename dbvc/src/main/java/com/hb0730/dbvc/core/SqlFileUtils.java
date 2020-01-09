@@ -1,11 +1,10 @@
-package com.hb0730.dbvc.spring.core;
+package com.hb0730.dbvc.core;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public class SqlFileUtils {
                 }
             }
             return files;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

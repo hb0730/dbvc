@@ -1,12 +1,10 @@
 package com.hb0730.dbvc.spring.startrun;
 
-import com.hb0730.dbvc.spring.core.RunSqlFile;
+import com.hb0730.dbvc.core.RunSqlFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * <p>
