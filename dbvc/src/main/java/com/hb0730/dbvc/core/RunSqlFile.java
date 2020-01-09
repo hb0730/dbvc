@@ -94,7 +94,6 @@ public class RunSqlFile {
                 runner.setLogWriter(null);
             }
             runner.runScript(new InputStreamReader(new FileInputStream(file)));
-            runner.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("run mybatis ScriptRunner error,Message:{}", e.getMessage());
