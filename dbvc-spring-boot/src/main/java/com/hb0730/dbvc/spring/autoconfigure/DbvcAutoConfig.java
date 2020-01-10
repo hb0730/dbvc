@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -28,6 +29,7 @@ import java.sql.SQLException;
 @EnableConfigurationProperties(DbvcProperties.class)
 @ConditionalOnProperty(prefix = "dbvc", value = "enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnClass(RunSqlFile.class)
+@ComponentScan("com.hb0730.dbvc")
 public class DbvcAutoConfig {
     private Logger logger = LoggerFactory.getLogger(DbvcAutoConfig.class);
 
