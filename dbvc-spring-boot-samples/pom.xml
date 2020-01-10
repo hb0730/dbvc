@@ -22,8 +22,8 @@
     <dependencies>
         <dependency>
             <groupId>com.hb0730</groupId>
-            <artifactId>dbvc-spring-boot</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <artifactId>dbvc-spring-boot-starter</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
         <!-- web模块依赖 -->
         <dependency>

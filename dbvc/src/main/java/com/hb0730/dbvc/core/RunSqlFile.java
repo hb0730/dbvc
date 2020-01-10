@@ -108,7 +108,7 @@ public class RunSqlFile {
      * 启动
      * </p>
      */
-    public void star() throws SQLException {
+    public void star() {
         List<File> files = readFile();
         if (!CollectionUtils.isEmpty(files)) {
             createTabled();
@@ -137,10 +137,9 @@ public class RunSqlFile {
      */
     private void createTabled() {
         logger.debug("create table>>>>>>>");
-        String selectSql = "select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA=(select database()) AND table_name = 'schema_history'";
-        String createSql = "create table schema_history( `id` int(11) NOT NULL AUTO_INCREMENT,`description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL," +
-                "`createTime` datetime(0) NULL DEFAULT NULL,`success` int(2) NULL DEFAULT NULL, `execution_time` int(11) NULL DEFAULT NULL," +
-                " PRIMARY KEY (`id`) USING BTREE) ";
+
+        String selectSql = String.format("select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA=(select database()) AND table_name = '%s'", properties.getTableName());
+        String createSql = String.format("create table %s( `id` int(11) NOT NULL AUTO_INCREMENT,`description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,`createTime` datetime(0) NULL DEFAULT NULL,`success` int(2) NULL DEFAULT NULL, `execution_time` int(11) NULL DEFAULT NULL, PRIMARY KEY (`id`) USING BTREE)", properties.getTableName());
         try {
             ResultSet resultSet = getConnection().prepareStatement(selectSql).executeQuery();
             if (!resultSet.next()) {
@@ -163,10 +162,10 @@ public class RunSqlFile {
      * @param success       是否成功
      * @param executionTime 耗时
      */
-    private void insert(String description, java.sql.Date date, int success, long executionTime) throws SQLException {
+    private void insert(String description, java.sql.Date date, int success, long executionTime) {
         logger.debug("insert db version controller");
         Connection connection = getConnection();
-        String sql = "insert into schema_history(`description`,`createTime`,`success`,`execution_time`)Values(?,?,?,?)";
+        String sql = String.format("insert into %s(`description`,`createTime`,`success`,`execution_time`)Values(?,?,?,?)", properties.getTableName());
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, description);
@@ -189,7 +188,7 @@ public class RunSqlFile {
      * @return filename
      */
     private List<String> getAll() {
-        String sql = "select description from schema_history WHERE success=1";
+        String sql = String.format("select description from %s WHERE success=1", properties.getTableName());
         try {
             ResultSet resultSet = getConnection().prepareStatement(sql).executeQuery();
             List<String> result = new ArrayList<>();

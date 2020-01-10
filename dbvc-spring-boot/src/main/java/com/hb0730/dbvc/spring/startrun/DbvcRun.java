@@ -1,7 +1,6 @@
 package com.hb0730.dbvc.spring.startrun;
 
 import com.hb0730.dbvc.core.RunSqlFile;
-import com.hb0730.dbvc.exception.DbvcException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +8,9 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
-
 /**
  * <p>
+ * 项目启动后自动执行start
  * </P>
  *
  * @author bing_huang
@@ -26,15 +24,9 @@ public class DbvcRun implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        log.debug("dbvc star>>>>>");
         if (event.getApplicationContext().getParent() == null) {
-            try {
-                runSqlFile.star();
-            } catch (SQLException e) {
-                log.debug("start dbvc error:{}", e);
-                e.printStackTrace();
-                throw new DbvcException("star dbvc error, message:" + e.getMessage());
-            }
-            ;
+            runSqlFile.star();
         }
     }
 }

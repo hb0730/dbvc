@@ -34,8 +34,12 @@ public class DbvcProperties {
     private boolean stopOnError = true;
 
     private boolean enabled = true;
+    /**
+     * table name
+     */
+    private String tableName= "schema_history";
 
-    public DbvcProperties(String url, boolean autoCommit, boolean fullLineDelimiter, String delimiter, boolean sendFullScript, boolean stopOnError, boolean enabled) {
+    public DbvcProperties(String url, boolean autoCommit, boolean fullLineDelimiter, String delimiter, boolean sendFullScript, boolean stopOnError, boolean enabled, String tableName) {
         this.url = url;
         this.autoCommit = autoCommit;
         this.fullLineDelimiter = fullLineDelimiter;
@@ -43,6 +47,7 @@ public class DbvcProperties {
         this.sendFullScript = sendFullScript;
         this.stopOnError = stopOnError;
         this.enabled = enabled;
+        this.tableName = tableName;
     }
 
     public DbvcProperties() {
@@ -104,6 +109,14 @@ public class DbvcProperties {
         this.enabled = enabled;
     }
 
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -115,12 +128,13 @@ public class DbvcProperties {
                 stopOnError == that.stopOnError &&
                 enabled == that.enabled &&
                 Objects.equals(url, that.url) &&
-                Objects.equals(delimiter, that.delimiter);
+                Objects.equals(delimiter, that.delimiter) &&
+                Objects.equals(tableName, that.tableName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(url, autoCommit, fullLineDelimiter, delimiter, sendFullScript, stopOnError, enabled);
+        return Objects.hash(url, autoCommit, fullLineDelimiter, delimiter, sendFullScript, stopOnError, enabled, tableName);
     }
 
     @Override
@@ -133,6 +147,7 @@ public class DbvcProperties {
                 ", sendFullScript=" + sendFullScript +
                 ", stopOnError=" + stopOnError +
                 ", enabled=" + enabled +
+                ", tableName='" + tableName + '\'' +
                 '}';
     }
 }
