@@ -1,5 +1,7 @@
 # Compiled class file
 *.class
+*.classpath
+*.factorypath
 
 # Log file
 *.log
@@ -21,3 +23,25 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# IDE Files #
+*.iml
+.idea
+.idea/
+.project
+.settings
+target
+.DS_Store
+
+# Created by .ignore support plugin (hsz.mobi)
+### Maven template
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+pom.xml
