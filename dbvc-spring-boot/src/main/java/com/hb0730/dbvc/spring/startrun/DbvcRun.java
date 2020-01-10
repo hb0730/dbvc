@@ -4,6 +4,7 @@ import com.hb0730.dbvc.core.RunSqlFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
  * @since V1.0
  */
 @Component
+@Order(Integer.MAX_VALUE)
 public class DbvcRun implements ApplicationRunner {
     @Autowired
     private RunSqlFile runSqlFile;
