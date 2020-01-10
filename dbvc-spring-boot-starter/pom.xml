@@ -5,7 +5,7 @@
     <parent>
         <artifactId>dbvc-spring-boot-parent</artifactId>
         <groupId>com.hb0730</groupId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.1.0</version>
         <relativePath>../dbvc-spring-boot-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
     <artifactId>dbvc-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
 
-    <name>dbvc-spring-boot</name>
+    <name>dbvc-spring-boot-starter</name>
     <description>database version controller</description>
     <url>https://github.com/hb0730/dbvc</url>
 

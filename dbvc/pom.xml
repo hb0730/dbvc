@@ -5,7 +5,7 @@
     <parent>
         <artifactId>dbvc-parent</artifactId>
         <groupId>com.hb0730</groupId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -16,25 +16,6 @@
     <description>database version controller</description>
     <url>https://github.com/hb0730/dbvc</url>
 
-    <licenses>
-        <license>
-            <name>GPL-2.0 License</name>
-            <url>https://choosealicense.com/licenses/gpl-2.0/</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>hb730</name>
-            <email>1278032416@qq.com</email>
-        </developer>
-    </developers>
-
-    <scm>
-        <connection>scm:git@github.com:hb0730/dbvc.git</connection>
-        <developerConnection>scm:git@github.com:hb0730/dbvc.git</developerConnection>
-        <url>https://github.com/hb0730/dbvc.git</url>
-    </scm>
     <properties>
         <mybatis.version>3.5.3</mybatis.version>
         <spring.version>5.1.0.RELEASE</spring.version>
