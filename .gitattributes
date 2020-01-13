@@ -2,4 +2,3 @@
 *.css linguist-language=Java
 *.ftl linguist-language=FreeMarker
 *.html linguist-language=Vue
-pom.xml merge=ours
