@@ -13,4 +13,11 @@ dbvc(数据库版本控制),见名思意,用于项目升级，只需编写.sql�
  `DbvcProperties`还提供了是否启动`enabled`字段,默认状态时`true`
 ## samples
 <https://github.com/hb0730/dbvc/tree/master/dbvc-spring-boot-samples>
-
+# Maven coordinates
+```
+<dependency>
+    <groupId>com.hb0730</groupId>
+    <artifactId>dbvc-parent</artifactId>
+    <version>${dbvc-version}</version>
+</dependency>
+```
