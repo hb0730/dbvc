@@ -11,7 +11,7 @@ jobs:
   include:
     - stage: build
       name: "maven build"
-      script: mvn clean install  -DskipTests=true -Dmaven.javadoc.skip=true
+      script: mvn clean install  -DskipTests=true -Dmaven.javadoc.skip=true -Dpgp-skip=true
     - stage: GitHub Release
       script: echo "Deploying to GitHub releases ..." && pwd
       deploy:
@@ -19,9 +19,8 @@ jobs:
         api_key: $GITHUB_OAUTH_TOKEN
         file_glob: true
         file:
+          - $TRAVIS_BUILD_DIR/dbvc/target/*.jar
           - $TRAVIS_BUILD_DIR/dbvc-spring-boot/target/*.jar
-          - $TRAVIS_BUILD_DIR/dbvc-spring-boot-parent/target/*.jar
-          - $TRAVIS_BUILD_DIR/dbvc-spring-boot-starter/target/*.jar
         skip_cleanup: true
         on:
           tags: true
