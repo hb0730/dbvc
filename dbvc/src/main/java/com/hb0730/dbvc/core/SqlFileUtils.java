@@ -1,5 +1,7 @@
 package com.hb0730.dbvc.core;
 
+import com.hb0730.dbvc.exception.DbvcException;
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.FileCopyUtils;
@@ -11,14 +13,14 @@ import java.util.List;
 
 /**
  * <p>
- * 读取sql文件
+ * 读取.sql文件
  * </P>
  *
  * @author bing_huang
  * @since V1.0
  */
-public class SqlFileUtils {
-
+class SqlFileUtils {
+    private static final String SQL=".sql";
     /**
      * <p>
      * 获取文件夹下的sql文件
@@ -27,7 +29,7 @@ public class SqlFileUtils {
      * @param url 地址
      * @return file集
      */
-    public static List<File> getFile(String url) {
+    static List<File> getFile(String url) {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = null;
         try {
@@ -37,7 +39,11 @@ public class SqlFileUtils {
                 InputStream inputStream = resource.getInputStream();
                 String filename = resource.getFilename();
                 if (filename != null) {
-                    File file = new File(filename);
+                    filename = filename.substring(0, filename.lastIndexOf("."));
+                    if (filename.length() < 3) {
+                        throw new DbvcException("file name length Min 3");
+                    }
+                    File file = File.createTempFile(filename, SQL);
                     byte[] bytes = FileCopyUtils.copyToByteArray(inputStream);
                     FileCopyUtils.copy(bytes, file);
                     files.add(file);

@@ -21,3 +21,14 @@ dbvc(数据库版本控制),见名思意,用于项目升级，只需编写.sql�
     <version>${dbvc-version}</version>
 </dependency>
 ```
+# spring-boot project
+```$xslt
+<dependency>
+    <groupId>com.hb0730</groupId>
+    <artifactId>dbvc-spring-boot-starter</artifactId>
+    <version>${dbvc-version}</version>
+</dependency>
+```
+## MAVEN 
+ * Install `mvn clean install -Dpgp-skip -DskipTests`
+ * Deploy  `mvn clean deploy  -P release -Dgpg.passphrase="passphrasem密码"`

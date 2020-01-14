@@ -11,4 +11,8 @@
  * 实现了spring-boot-starter方式
  * properties可配置化
  
+## 1.1.1-SNAPSHOT
+ * fix file delete
+ * fix sqlFileUtils包问题
+ * fix create temp file
  

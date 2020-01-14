@@ -1,8 +1,6 @@
 package com.hb0730.dbvc.samples.test;
 
-import com.hb0730.dbvc.core.SqlFileUtils;
 import org.junit.Test;
-import org.springframework.util.ResourceUtils;
 
 /**
  * <p>
@@ -15,6 +13,7 @@ public class SqlFileUtilsTest {
 
     @Test
     public void getFileTest() {
-        SqlFileUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "sql/*.sql");
+
+//        SqlFileUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "sql/*.sql");
     }
 }
