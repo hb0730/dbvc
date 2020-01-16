@@ -2,6 +2,7 @@ package com.hb0730.dbvc.core;
 
 import com.hb0730.dbvc.exception.DbvcException;
 import com.hb0730.dbvc.properties.DbvcProperties;
+import com.hb0730.dbvc.properties.FileInputStreamProperties;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,17 +58,17 @@ public class RunSqlFile {
      *
      * @return 脚本文件
      */
-    private List<File> readFile() {
-        List<File> file = SqlFileUtils.getFile(properties.getUrl());
+    private List<FileInputStreamProperties> readFile() {
+        List<FileInputStreamProperties> file = SqlFileUtils.getFile(properties.getUrl());
         if (CollectionUtils.isEmpty(file)) {
             return null;
         }
-        Map<String, File> collect = file.stream().collect(Collectors.toMap(File::getName, account -> account));
+        Map<String, FileInputStreamProperties> collect = file.stream().collect(Collectors.toMap(FileInputStreamProperties::getFileName, account -> account));
         Set<String> strings = collect.keySet();
         createTabled();
         List<String> all = getAll();
         strings.removeAll(all);
-        List<File> newFile = new ArrayList<>();
+        List<FileInputStreamProperties> newFile = new ArrayList<>();
         strings.forEach((s) -> newFile.add(collect.get(s)));
         return newFile;
     }
@@ -79,7 +80,7 @@ public class RunSqlFile {
      *
      * @param file sql文件集
      */
-    private void run(File file) {
+    private void run(FileInputStreamProperties file) {
         if (Objects.isNull(file)) {
             return;
         }
@@ -93,7 +94,7 @@ public class RunSqlFile {
             if (!logger.isDebugEnabled()) {
                 runner.setLogWriter(null);
             }
-            runner.runScript(new InputStreamReader(new FileInputStream(file)));
+            runner.runScript(new InputStreamReader(file.getInputStream()));
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("run mybatis ScriptRunner error,Message:{}", e.getMessage());
@@ -109,27 +110,25 @@ public class RunSqlFile {
      * </p>
      */
     public void star() {
-        List<File> files = readFile();
-        if (!CollectionUtils.isEmpty(files)) {
+        List<FileInputStreamProperties> files = readFile();
+        if (!CollectionUtils.isEmpty(files)){
             createTabled();
-            for (File file : files) {
+            for (FileInputStreamProperties file : files) {
                 long start = System.currentTimeMillis();
                 int success = 1;
                 String fileName = "";
                 try {
-                    fileName = file.getName();
+                    fileName = file.getFileName();
                     run(file);
-                } catch (Exception e) {
+                }catch (Exception e) {
                     success = 0;
                     throw new DbvcException(e.getMessage());
-                } finally {
+                }finally {
                     long end = System.currentTimeMillis();
                     java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
                     insert(fileName, date, success, end - start);
                 }
-
             }
-            files.forEach(File::deleteOnExit);
         }
     }
 

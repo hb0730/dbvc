@@ -16,3 +16,4 @@
  * fix sqlFileUtils包问题
  * fix create temp file
  * fix file extension
+ * fix RunSqlFile采用InputStream流读取
