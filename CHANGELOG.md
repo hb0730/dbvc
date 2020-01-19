@@ -17,3 +17,8 @@
  * fix create temp file
  * fix file extension
  * fix RunSqlFile采用InputStream流读取
+
+## 1.2-release
+### Features
+  *实现RunSqlFile文件读取InputStream流读取
+  
