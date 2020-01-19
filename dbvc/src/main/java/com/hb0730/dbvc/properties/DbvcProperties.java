@@ -37,7 +37,7 @@ public class DbvcProperties {
     /**
      * table name
      */
-    private String tableName= "schema_history";
+    private String tableName = "schema_history";
 
     public DbvcProperties(String url, boolean autoCommit, boolean fullLineDelimiter, String delimiter, boolean sendFullScript, boolean stopOnError, boolean enabled, String tableName) {
         this.url = url;

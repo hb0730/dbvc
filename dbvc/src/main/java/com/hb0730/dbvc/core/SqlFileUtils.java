@@ -50,7 +50,7 @@ class SqlFileUtils {
 
 
     private static void addFileInput(Resource resource, List<FileInputStreamProperties> streams) {
-        if ( !Objects.isNull(resource)) {
+        if (!Objects.isNull(resource)) {
             try {
                 InputStream inputStream = resource.getInputStream();
                 String filename = resource.getFilename();

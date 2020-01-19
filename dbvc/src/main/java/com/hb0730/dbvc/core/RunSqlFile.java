@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -111,7 +109,7 @@ public class RunSqlFile {
      */
     public void star() {
         List<FileInputStreamProperties> files = readFile();
-        if (!CollectionUtils.isEmpty(files)){
+        if (!CollectionUtils.isEmpty(files)) {
             createTabled();
             for (FileInputStreamProperties file : files) {
                 long start = System.currentTimeMillis();
@@ -120,10 +118,10 @@ public class RunSqlFile {
                 try {
                     fileName = file.getFileName();
                     run(file);
-                }catch (Exception e) {
+                } catch (Exception e) {
                     success = 0;
                     throw new DbvcException(e.getMessage());
-                }finally {
+                } finally {
                     long end = System.currentTimeMillis();
                     java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
                     insert(fileName, date, success, end - start);
