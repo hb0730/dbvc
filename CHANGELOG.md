@@ -21,4 +21,6 @@
 ## 1.2.0-release
 ### Features
   *实现RunSqlFile文件读取InputStream流读取
-  
+ 
+## 1.2.1-release
+ * fix dbvc spring boot starter enabled 无效

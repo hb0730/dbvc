@@ -4,6 +4,7 @@ import com.hb0730.dbvc.core.RunSqlFile;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -19,14 +20,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class DbvcRun implements ApplicationListener<ContextRefreshedEvent> {
     private Log log = LogFactory.getLog(DbvcRun.class);
-    @Autowired
-    private RunSqlFile runSqlFile;
+    @Value("${dbvc.enabled}")
+    private boolean enabled;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        log.debug("dbvc star>>>>>");
-        if (event.getApplicationContext().getParent() == null) {
-            runSqlFile.star();
+        if (enabled) {
+            log.debug("dbvc star>>>>>");
+            if (event.getApplicationContext().getParent() == null) {
+                RunSqlFile runSqlFile = event.getApplicationContext().getBean(RunSqlFile.class);
+                runSqlFile.star();
+                ;
+            }
         }
     }
 }
