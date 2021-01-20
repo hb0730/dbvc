@@ -96,14 +96,14 @@ public class RunSqlFile {
             connection.setAutoCommit(false);
             ScriptRunner runner = new ScriptRunner(getConnection());
             // 不自动提交
-            runner.setAutoCommit(false);
+            runner.setAutoCommit(properties.isAutoCommit());
             // 定义命令间的分隔符
             runner.setDelimiter(properties.getDelimiter());
-            runner.setFullLineDelimiter(false);
+            runner.setFullLineDelimiter(properties.isFullLineDelimiter());
             // true则获取整个脚本并执行；
             // false则按照自定义的分隔符每行执行；
             runner.setSendFullScript(properties.isSendFullScript());
-            runner.setStopOnError(true);
+            runner.setStopOnError(properties.isStopOnError());
             //   // 设置是否输出日志，null不输出日志，不设置自动将日志输出到控制台
             if (!LOGGER.isDebugEnabled()) {
                 runner.setLogWriter(null);

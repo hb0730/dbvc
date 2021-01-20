@@ -22,7 +22,7 @@ public class DbvcProperties {
      * auto commit
      * 是否自动提交，默认为false
      */
-    private boolean autoCommit = false;
+    private final boolean autoCommit = false;
 
     private boolean fullLineDelimiter = false;
 
@@ -54,7 +54,7 @@ public class DbvcProperties {
      *     </li>
      * </ul>
      */
-    private boolean stopOnError = true;
+    private final boolean stopOnError = true;
     /**
      * 是否启用dbvc
      */
@@ -64,13 +64,11 @@ public class DbvcProperties {
      */
     private String tableName = "schema_history";
 
-    public DbvcProperties(String url, boolean autoCommit, boolean fullLineDelimiter, String delimiter, boolean sendFullScript, boolean stopOnError, boolean enabled, String tableName) {
+    public DbvcProperties(String url, boolean fullLineDelimiter, String delimiter, boolean sendFullScript, boolean enabled, String tableName) {
         this.url = url;
-        this.autoCommit = autoCommit;
         this.fullLineDelimiter = fullLineDelimiter;
         this.delimiter = delimiter;
         this.sendFullScript = sendFullScript;
-        this.stopOnError = stopOnError;
         this.enabled = enabled;
         this.tableName = tableName;
     }
@@ -88,10 +86,6 @@ public class DbvcProperties {
 
     public boolean isAutoCommit() {
         return autoCommit;
-    }
-
-    public void setAutoCommit(boolean autoCommit) {
-        this.autoCommit = autoCommit;
     }
 
     public boolean isFullLineDelimiter() {
@@ -120,10 +114,6 @@ public class DbvcProperties {
 
     public boolean isStopOnError() {
         return stopOnError;
-    }
-
-    public void setStopOnError(boolean stopOnError) {
-        this.stopOnError = stopOnError;
     }
 
     public boolean isEnabled() {
