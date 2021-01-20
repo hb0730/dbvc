@@ -14,28 +14,53 @@ public class DbvcProperties {
 
     /**
      * sql Script url
+     * 需要读取SQL文件地址，默认为classpath:sql/*.sql
      */
     private String url = "classpath:sql/*.sql";
 
     /**
      * auto commit
+     * 是否自动提交，默认为false
      */
-    private boolean autoCommit = true;
+    private boolean autoCommit = false;
 
     private boolean fullLineDelimiter = false;
 
     /**
      * delimiter
+     * 定义命令间的分隔符
      */
     private String delimiter = ";";
-
+    /**
+     * 按照那种方式执行
+     * <ul>
+     *     <li>
+     *         1. true则获取整个脚本并执行；
+     *     </li>
+     *     <li>
+     *         2. false则按照自定义的分隔符每行执行；
+     *     </li>
+     * </ul>
+     */
     private boolean sendFullScript = false;
-
+    /**
+     * 遇见错误是否停止；
+     * <ul>
+     *     <li>
+     *         1. false，遇见错误不会停止，会继续执行，会打印异常信息，并不会抛出异常，当前方法无法捕捉异常无法进行回滚操作，无法保证在一个事务内执行；
+     *     </li>
+     *     <li>
+     *         2. true，遇见错误会停止执行，打印并抛出异常，捕捉异常，并进行回滚，保证在一个事务内执行；
+     *     </li>
+     * </ul>
+     */
     private boolean stopOnError = true;
-
+    /**
+     * 是否启用dbvc
+     */
     private boolean enabled = true;
     /**
-     * table name
+     * table name,内置的表名
      */
     private String tableName = "schema_history";
 

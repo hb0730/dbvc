@@ -1,0 +1,3 @@
+INSERT INTO `j_sys_notice`(`id`, `create_id`, `create_time`, `title`, `is_new`, `tag`, `memo`, `content`, `notice_time`) VALUES (10, 'B14B0CD7710F44B1A1BB5F2235464245', '2019-12-17 15:56:30', '测试公告', 0, '公告', '预计晚上八点部署更新', NULL, '2019-12-24 16:15:00');
+INSERT INTO `j_sys_notice`(`id`, `create_id`, `create_time`, `title`, `is_new`, `tag`, `memo`, `content`, `notice_time`) VALUES (11, 'B14B0CD7710F44B1A1BB5F2235464245', '2019-12-17 16:48:12', '测试公告', 0, NULL, NULL, NULL, '2019-12-24 14:00:00');
+-- INSERT INTO `j_sys_notice`(`id`, `create_id`, `create_time`, `title`, `is_new`, `tag`, `memo`, `content`, `notice_time`) VALUES (11, 'B14B0CD7710F44B1A1BB5F2235464245', '2019-12-17 16:48:12', '测试公告', 0, NULL, NULL, NULL, '2019-12-24 14:00:00');

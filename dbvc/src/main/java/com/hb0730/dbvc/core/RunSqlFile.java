@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
  * @since V1.0
  */
 public class RunSqlFile {
-    private Logger logger = LoggerFactory.getLogger(RunSqlFile.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RunSqlFile.class);
     private DbvcProperties properties;
     private Connection connection;
 
@@ -61,7 +62,10 @@ public class RunSqlFile {
         if (CollectionUtils.isEmpty(file)) {
             return null;
         }
-        Map<String, FileInputStreamProperties> collect = file.stream().collect(Collectors.toMap(FileInputStreamProperties::getFileName, account -> account));
+        // 保证有序
+        Map<String, FileInputStreamProperties> collect = file
+                .stream()
+                .collect(Collectors.toMap(FileInputStreamProperties::getFileName, Function.identity(), (v1, v2) -> v2, LinkedHashMap::new));
         Set<String> strings = collect.keySet();
         createTabled();
         List<String> all = getAll();
@@ -78,24 +82,42 @@ public class RunSqlFile {
      *
      * @param file sql文件集
      */
-    private void run(FileInputStreamProperties file) {
+    private void run(FileInputStreamProperties file) throws SQLException {
         if (Objects.isNull(file)) {
             return;
         }
+        Connection connection = getConnection();
+        if (connection == null) {
+            return;
+        }
+        boolean autoCommit = false;
         try {
+            autoCommit = connection.getAutoCommit();
+            connection.setAutoCommit(false);
             ScriptRunner runner = new ScriptRunner(getConnection());
-            runner.setAutoCommit(properties.isAutoCommit());
-            runner.setFullLineDelimiter(properties.isFullLineDelimiter());
+            // 不自动提交
+            runner.setAutoCommit(false);
+            // 定义命令间的分隔符
             runner.setDelimiter(properties.getDelimiter());
+            runner.setFullLineDelimiter(false);
+            // true则获取整个脚本并执行；
+            // false则按照自定义的分隔符每行执行；
             runner.setSendFullScript(properties.isSendFullScript());
-            runner.setStopOnError(properties.isStopOnError());
-            if (!logger.isDebugEnabled()) {
+            runner.setStopOnError(true);
+            //   // 设置是否输出日志，null不输出日志，不设置自动将日志输出到控制台
+            if (!LOGGER.isDebugEnabled()) {
                 runner.setLogWriter(null);
             }
             runner.runScript(new InputStreamReader(file.getInputStream()));
+            connection.commit();
+            //重新设置 保持原有
+            connection.setAutoCommit(autoCommit);
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("run mybatis ScriptRunner error,Message:{}", e.getMessage());
+            LOGGER.error("run mybatis ScriptRunner error,Message:{}", e.getMessage());
+            // rollback
+            connection.rollback();
+            connection.setAutoCommit(autoCommit);
             throw new DbvcException("run mybatis ScriptRunner error");
         }
 
@@ -134,7 +156,7 @@ public class RunSqlFile {
      * 是否创建表结构
      */
     private void createTabled() {
-        logger.debug("create table>>>>>>>");
+        LOGGER.debug("create table>>>>>>>");
 
         String selectSql = String.format("select TABLE_NAME from information_schema.TABLES where TABLE_SCHEMA=(select database()) AND table_name = '%s'", properties.getTableName());
         String createSql = String.format("create table %s( `id` int(11) NOT NULL AUTO_INCREMENT,`description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,`createTime` datetime(0) NULL DEFAULT NULL,`success` int(2) NULL DEFAULT NULL, `execution_time` int(11) NULL DEFAULT NULL, PRIMARY KEY (`id`) USING BTREE)", properties.getTableName());
@@ -145,7 +167,7 @@ public class RunSqlFile {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.error("create table error,{}", e.getMessage());
+            LOGGER.error("create table error,{}", e.getMessage());
             throw new DbvcException("create table error");
         }
     }
@@ -161,7 +183,7 @@ public class RunSqlFile {
      * @param executionTime 耗时
      */
     private void insert(String description, java.sql.Date date, int success, long executionTime) {
-        logger.debug("insert db version controller");
+        LOGGER.debug("insert db version controller");
         Connection connection = getConnection();
         String sql = String.format("insert into %s(`description`,`createTime`,`success`,`execution_time`)Values(?,?,?,?)", properties.getTableName());
         try {
@@ -173,7 +195,7 @@ public class RunSqlFile {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.error("insert dbvc error, message:{}", e.getMessage());
+            LOGGER.error("insert dbvc error, message:{}", e.getMessage());
             throw new DbvcException("insert dbvc error");
         }
     }
@@ -196,7 +218,7 @@ public class RunSqlFile {
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.error("select error,{}", e.getMessage());
+            LOGGER.error("select error,{}", e.getMessage());
             throw new DbvcException("select error");
         }
     }
